@@ -1,0 +1,47 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs|Notificaciones" />
+
+# Notificaciones
+
+Hay tres formas de crear una notificación, que pueden ser de tipo `error, info, success, warning`:
+
+1. La primera es usando la acción addNotification:
+
+```js
+import { addNotification } from 'reducers/notifications';
+
+addNotification({
+  level: 'success',
+  message: 'Este es un mensaje de notificación',
+});
+
+```
+
+2. También se pueden añadir desde las acciones, añadiendo el type al middleware de notificaciones:
+
+```js
+const _actionSuccess = () => ({
+  type: ACTION.SUCCESS,
+  payload: {
+    level: 'info',
+    message: 'Este es un mensaje de información'
+  }
+});
+```
+
+`store/middlewares/notifications/notifications.js`
+```js
+const notifications = {
+  [ACTION.SUCCESS]: setPayload,
+};
+```
+
+3. Las notificaciones de error de las actions, que contienen el tipo _FAILURE, se muestran de forma automática:
+
+```js
+const _actionError = error => ({
+  type: ACTION.FAILURE,
+  error,
+});
+```

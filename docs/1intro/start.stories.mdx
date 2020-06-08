@@ -1,0 +1,56 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs|Preparación" />
+
+# Preparación
+
+## Instalación
+Lo primero para comenzar, una vez descargado el proyecto, es instalar las dependencas del proyecto con Npm o Yarn.
+
+- NPM: `npm i`
+- YARN: `yarn install`
+
+## Configuración
+
+Hay creados 4 archivos con las variables de entorno, en la raíz del proyecto:
+- .env - Se establecen las variables para todos los entornos
+- .env.dev - Se establecen las variables para el entorno Dev
+- .env.pre - Se establecen las variables para el entorno Preproducción
+- .env.prod - Se establecen las variables para el entorno Producción
+
+Para establecer la URL del api que se usará en cada entorno, basta con asignarla a la variable **REACT_APP_API_HOST**
+de cada entorno.
+
+## Ejecución
+
+En el archivo package.json se han definido una serie de comandos que pueden ser utilizados con `npm run`.
+
+```JSON
+  "scripts": {
+    "start:dev": "env-cmd -f .env.dev react-scripts start",
+    "start:pre": "env-cmd -f .env.pre react-scripts start",
+    "start:prod": "env-cmd -f .env.prod react-scripts start",
+    "build:dev": "env-cmd -f .env.dev react-scripts build",
+    "build:pre": "env-cmd -f .env.pre react-scripts build",
+    "build:prod": "env-cmd -f .env.prod react-scripts build",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:record": "cypress run --record --key token",
+    "cypress:ci": "CYPRESS_MOCK=true cypress run --config video=false",
+    "start:ci": "start-server-and-test start:pre http://localhost:3000",
+    "lint": "./node_modules/.bin/eslint ./src/***/*.js",
+    "lint:fix": "./node_modules/.bin/eslint ./src/***/*.js --fix",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  }
+```
+- Comandos start:entorno -> Levantan el front en local apuntando al api del entorno correspondiente.
+- Comnados build:entorno -> Generan el proyecto listo para usar, apuntando al api del entorno correspondiente.
+- cypress:open -> Abre el dashboard de cypress donde se pueden ver y elegir los tests.
+- cypress:run -> Corre todos los tests de cypress desde la consola.
+- cypress:record -> Corre todos los tests, genera un video de cada uno y los envía al dashboard de cypress.io.
+- start:ci -> Levanta un servidor con la aplicación (para correr los tests en el ci).
+- lint -> Busca código que no cumple las reglas de eslint
+- lint:fix -> Busca y corrige el código que no cumple las reglas de eslint.
+- storybook: Levanta un servidor con storybook y lo lanza en el navegador.
+- storybook: Genera los staticos de storybook que pueden ser desplegados en un hosting

@@ -1,0 +1,29 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs|Permisos" />
+
+# Permisos
+
+## Declaración de permisos
+Los permisos son definidos en el backend y los recibe el front al iniciar sesión. Pero para poder usar dichos permisos
+es necesario añadirlos a USER_PERMISSIONS en `src/constants/permissions.js`;
+
+```js
+const SEARCH_CLIENTS = 'SEARCH_CLIENTS';
+
+export const USER_PERMISSIONS = {
+  SEARCH_CLIENTS,
+};
+```
+
+## Renderizar componentes o no según los permisos
+Hay un warapper que renderiza o no su contenido en función de si el usuario tiene un permiso establecido o no.
+
+```js
+import { HasPermission } from 'components';
+import { USER_PERMISSIONS } from 'constants/permissions';
+
+<HasPermission access={USER_PERMISSIONS.SEARCH_CLIENTS}>
+     <button type="button">¡Pulsame!</button>
+</HasPermission>
+```

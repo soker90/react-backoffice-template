@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs|Cypress/Comandos" />
+
+# Comandos
+
+Para facilitar tareas repetitivas al realizar tests, se han creado algunos comandos. Estos se crean en
+`cypress/support/commands.js` y pueden para usarlos `cy.myCommand()`;
+
+## Login
+
+Con este comando se puede hacer **iniciar sesión** sin hacerlo desde el front. Si no encuentra la variable *MOCK*
+realiza una petición de login al API y guarda en localStorage el token o lo que necesite. En caso de que encuentre
+la variable *MOCK* recoge los datos necesario de un mock y realiza las acciones necesarias para simular un login.
+
+```js
+import { BCT_TOKEN } from '../../src/config';
+import adminSuccess from '../fixtures/login/adminSuccess.json';
+
+Cypress.Commands.add('login', userType => {
+  const users = {
+    admin: {
+      username: 'test',
+      password: 'test',
+    },
+    limited: {
+      username: 'limited',
+      password: 'limited',
+    },
+  };
+
+  const user = users[userType];
+  if (Cypress.env('MOCK')) {
+    const { data } = adminSuccess;
+    localStorage.setItem(BCT_TOKEN, data.token);
+  } else {
+    cy.request({
+      url: `${Cypress.env().HOST}/login`,
+      method: 'POST',
+      body: user,
+    })
+      .its('body')
+      .then(({ data }) => {
+        localStorage.setItem(BCT_TOKEN, data.token);
+      });
+  }
+});
+```
+
+Ejemplo de uso:
+```js
+cy.login('admin');
+```
+
+
+## Peticiones
+
+Con el comando **setRoute** se pueden interceptar peticiones, es recomendable usarlo en los tests en los que
+se realicen peticiones. Como mínumo se le debe pasar un **patrón de la url**, un **alias**, y un **mock de la
+respuesta**, también se le puede pasar un status si es diferent de 200.
+
+También es muy recomendable usar `cy.wait('@alias')` para esperar la respuesta de la petición antes de seguir con el
+tests. Por ejemplo, si se realiza una busqueda se pondrán un wait antes de comprobar los resultados de esta.
+
+```js
+Cypress.Commands.add('setRoute', (options, alias, json, mockOptions = {}) => {
+  cy.log(Cypress.env('MOCK'));
+  Cypress.env('MOCK')
+    ? cy.route({ ...options, ...mockOptions, response: `fixture:${json}` }).as(alias)
+    : cy.route(options).as(alias);
+});
+```
+
+Ejemplo de uso:
+```js
+cy.server();
+===
+cy.setRoute({url: '**/search/**'}, 'search', responseJson, {status});
+===
+cy.wait('@search');
+```

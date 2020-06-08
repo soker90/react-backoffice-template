@@ -1,0 +1,147 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs|Modales" />
+
+# Modales
+
+## Estructura
+La estructura de carpetas de los modales de cada ruta es la siguiente:
+
+```
+└───routes
+│   │
+│   └───Route
+│        └───modals
+│             └───MyModal
+│                   └───MyModalContainer.js
+│                   └───MyModalView.js
+|                   |───MyModalView.stories.js
+│                   └───MyModalView.styles.js
+│                   └───index.js
+│             └───types.js
+│             └───index.js
+```
+
+### modals/MyModal/MyModalContainer.js
+```js
+import { connect } from 'react-redux';
+import {myAction} from '../modules/actions';
+import MyModalView from './MyModalView';
+
+const mapStateToProps = ({...}) => ({
+  ...
+});
+
+const mapDispatchToProps = {
+  myAction,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MyModalView);
+
+```
+
+### modals/MyModal/MyModalView.(js|jsx)
+```jsx
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import { Typography, Box } from '@material-ui/core';
+
+const MyModalView = ({ show, close, myAction }) => (
+    <ModalGrid
+      show={show}
+      close={close}
+      title="Mi modal"
+      action={myAction}
+    >
+     <Box p={3}>
+       <Typography variant="h5">
+         Contenido de mi modal
+       </Typography>
+     </Box>
+    </ModalGrid>
+);
+
+MyModalView.propTypes = {
+  show: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  myAction: PropTypes.func.isRequired,
+};
+
+MyModalView.displayName = 'MyModalView';
+export const story = MyModalView;
+export default memo(MyModalView);
+```
+
+### modals/MyModal/MyModalView.stories.js
+```jsx
+import React from 'react';
+import {action} from '@storybook/addon-actions';
+
+import {story as MyModalView} from './MyModalView';
+
+export default {
+  title: 'Rutas|Route/Modales/MyModal',
+  parameters: {
+    component: MyModalView,
+    componentSubtitle: 'Modal de ejemplo',
+  },
+};
+
+const MyModal = () => (
+  <MyModalView
+    show={true}
+    close={action('Cerrar modal')}
+    myAction={action('myAction')}
+  />
+);
+
+MyModal.story = {
+  name: 'MyModal Default',
+};
+
+export {MyModal};
+```
+
+### modals/MyModal/MyModalView.styles.js
+```jsx
+import {makeStyles} from '@material-ui/core';
+
+export const useStyles = makeStyles( theme => ({
+  root: {},
+}));
+
+```
+
+### modals/MyModal/index.js
+```js
+export {default} from './MyModalContainer';
+
+```
+### modals/types.js
+```js
+export const MY_MODAL = 'MY_MODAL';
+```
+
+### modals/index.js
+```js
+import { lazy } from 'react';
+
+import { MY_MODAL } from './types';
+import MyModal from './MyModal';
+
+export default {
+  [MY_MODAL]: lazy(() => import('./MyModal')),,
+};
+```
+
+### src/components/Modals/ModalRoot/modal-components.js
+```js
+import routeModals from 'routes/Route/modals'
+
+export default {
+  ...routeModals
+};
+```

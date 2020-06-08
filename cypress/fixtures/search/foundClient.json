@@ -1,0 +1,13 @@
+{
+  "data": [
+    {
+      "email": "test@email.com",
+      "gender": "MALE",
+      "userId": 15931,
+      "postalCode": "24009",
+      "userCode": "775bec660b45bde59fd100949e2fdfa9",
+      "birthDate": "1982-04-23",
+      "phoneNumber": "+34669628547"
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs|Rutas"  />
+
+## Cómo crear una nueva ruta
+
+  - Crea una carpeta Ruta en `src/routes` con la siguiente estructura:
+```
+└───routes
+│   │
+│   └───Route
+│        └───components
+│             └───RouteView.js
+│             └───RouteView.styles.js
+│        └───containers
+│             └───RouteContainer.js
+│        └───modals
+│             └───RouteModal
+│                   └───RouteModalContainer.js
+│                   └───RouteModal.js
+│                   └───RouteModal.styles.js
+│                   └───index.js
+│             └───types.js
+│             └───index.js
+│        └───modules
+│             └───actions
+│                   └───index.js
+│                   └───action1.js
+│             └───types.js
+│             └───index.js
+│        │   index.js
+```
+
+### Componente
+
+Vista estandar del componente
+```jsx
+import React, { memo } from 'react'
+import PropTypes from 'prop-types';
+
+const ComponentName = hello =>
+      <div>
+        {hello}
+      </div>;
+
+ComponentName.propTypes = {
+  hello: PropTypes.string.isRequired,
+};
+
+ComponentName.displayName = 'ComponentName';
+export const story = ComponentName;
+export default memo(ComponentName);
+```
+
+### Container
+El container es una forma de inyectar al componente el estado de Redux y las actions.
+
+```js
+import {connect} from 'react-redux';
+
+import ComponentNameView from '../components/ComponentNameView';
+import {MY_MODAL} from '../modals/types';
+import {myAction} from '../modules/actions';
+import {showModal} from 'reducers/modal';
+
+const mapStateToProps = ({reunification, loadingBar}) => ({ // Receiver (state)
+  isLoading: !!loadingBar.default,
+  reunificationData: reunification.reunificationData,
+  loansTotalAmount: reunification.loansTotalAmount,
+});
+
+const mapDispatchToProps = {
+  addNotificmyActionation,
+  showModalEditReuLoan: (loanDetails, reunificationId, statusCod) =>
+    showModal({
+      modalType: MY_MODAL,
+      modalProps: {},
+    }),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReunificationView);
+
+```
+
+`Route/index.js`
+```js
+export {default} from './containers/RouteContainer';
+```
+
+### Modules
+En esta carpeta se almacenan los archivos necesarios para manejar el estado de redux. En caso de estados o acciones
+genéricas o que van a ser reutilizadas en otras rutas, se puede la carpeta a `src/modules/myState`.
+
+#### Action
+
+`modules/actions/getData.js`
+```js
+import axios from 'axios';
+import {GET_DATA} from '../types';
+
+/**
+ * Return actions for init request model
+ * @private
+ */
+const _getDataRequest = () => ({
+  type: GET_DATA.REQUEST,
+});
+
+/**
+ * Return actions for success request model
+ */
+const _getDataSuccess = () => ({
+  type: GET_DATA.SUCCESS,
+  payload: {
+    level: 'info',
+    message: 'Mi mensaje de notificación',
+  }
+});
+
+/**
+ * Set data in redux
+ * @param {Array} data
+ * @return {{payload: {refinanceds: _getRefinanceContractSet.props}, type: string}}
+ * @private
+ */
+const _getDataSet = ({data}) => ({
+  type: GET_DATA.SET,
+  payload: {
+    data,
+  },
+});
+
+/**
+ * Return action with error cause
+ * @param {Object} error
+ * @returns {{payload: {error: *}, type: *}}
+ */
+const _getDataError = error => ({
+  type: GET_RECOVERIES.FAILURE,
+  error,
+});
+
+
+export const getData = () => async dispatch => {
+  dispatch(_getDataRequest());
+
+  try {
+    const response = await axios('endoint/myData');
+
+    dispatch(_getDataSuccess());
+    dispatch(_getDataSet(response));
+  } catch (error) {
+    console.log(error);
+    dispatch(_getDataError(error));
+  }
+};
+```
+
+`modules/actions/index.js`
+```js
+export * from './getData';
+```
+
+#### Reducer
+`modules/index.js`
+```js
+import {GET_DATA} from './types';
+import { createReducer, setPayload } from 'store/utils';
+
+const INITIAL_STATE = {
+  data: [],
+};
+
+const ACTION_HANDLERS = {
+  [GET_DATA.SET]: setPayload,
+};
+
+export default createReducer(INITIAL_STATE, ACTION_HANDLERS);
+```
+
+#### Types
+`modules/types.js`
+```js
+import {requestActions} from 'utils';
+
+export const GET_DATA = requestActions('@data/get_data');
+
+```
+
+### Añadir al router
+Ahora se debe crear una ruta en el archivo `src/Routes.js` que indique que componente cargará y de si necesita
+permisos.
+
+```js
+path: '/app',
+guard: AuthGuard,
+layout: DashboardLayout,
+routes: [
+===
+    {
+        exact: true,
+        path: '/app/customercare/search',
+        permission: USER_PERMISSIONS.SEARCH_CLIENTS, // En caso de necesitar algún permiso específico para entrar a esta ruta
+        component: lazy(() => import('routes/Search')),
+    }
+===
+]
+```
+
+### Añadir a la barra de navegación
+Si se quiere mostrar un enlace en la barra de navegación, se debe añadir un nuevo elemento a
+`src/layout/DashboardLayout/NavBar/NavigationConfig.js`
+
+```js
+{
+===
+    items: [
+      {
+        title: 'Atención al cliente',
+        icon: PhoneOutlinedIcon,
+        href: '/app/customercare',
+        items: [
+          {
+            icon: SearchIcon,
+            title: 'Buscar',
+            href: '/app/customercare/search',
+            permission: USER_PERMISSIONS.SEARCH_CLIENTS,
+          },
+        ],
+      }
+    ===
+    ]
+}
+```

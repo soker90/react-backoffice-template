@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "viewportWidth": 1908,
+  "viewportHeight": 955,
+  "projectId": "4dj8qj",
+  "env": {
+    "HOST": ""
+  }
+}

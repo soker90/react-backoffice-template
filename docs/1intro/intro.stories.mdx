@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import logo from '../assets/logo-large.png';
+import {dependencies, devDependencies} from '../../package.json'
+
+<Meta title="Docs|Intro" />
+
+<div style={{ margin: '0 auto', maxWidth: '600px', color: 'white', textAlign: 'center' }}>
+  <img
+    style={{ width: '75%', margin: '0 auto 2em auto' }}
+    src={logo}
+  />
+  <br />
+  <br />
+  <a href="https://www.npmjs.com/package/node/v/lts">
+      <img src="https://img.shields.io/badge/Nodejs-v12.x-success.svg" />
+  </a>&nbsp;&nbsp;
+  <a href="https://www.npmjs.com/package/node">
+      <img src="https://img.shields.io/badge/Nodejs-v14.x-success.svg" />
+  </a>&nbsp;&nbsp;
+  <a href="https://github.com/facebook/react">
+      <img src={`https://img.shields.io/badge/React-v${dependencies.react.substr(1)}-informational.svg`} />
+  </a>&nbsp;&nbsp;
+  <a href="https://github.com/reduxjs/redux">
+      <img src={`https://img.shields.io/badge/Redux-v${dependencies.redux.substr(1)}-informational.svg`} />
+  </a>&nbsp;&nbsp;
+  <a href="https://material-ui.com/">
+      <img src={`https://img.shields.io/badge/MaterialUI-v${dependencies['@material-ui/core'].substr(1)}-informational.svg`} />
+  </a>&nbsp;&nbsp;
+  <a href="https://www.cypress.io/">
+      <img src={`https://img.shields.io/badge/Cypress-v${devDependencies.cypress.substr(1)}-informational.svg`} />
+  </a>&nbsp;&nbsp;
+  <a href="https://storybook.js.org/">
+      <img src={`https://img.shields.io/badge/Storybook-v${devDependencies['@storybook/react'].substr(1)}-informational.svg`} />
+  </a>
+
+  ---
+  Este repositorio contiene la base para crear un frontend para un backoffice. Se ha desarrollado con react v16 y redux, siguiendo
+  el patrón flux.
+
+  Se han incluido otras herramientas para facilitar el desarrollo, como Storybook para realizar la documentación y
+  Cypress para la realización de los tests necesarios.
+
+</div>
+

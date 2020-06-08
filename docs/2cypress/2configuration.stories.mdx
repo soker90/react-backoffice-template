@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import runs from '../assets/cypress/cypress-runs.png';
+import setup from '../assets/cypress/cypress-setup.png';
+
+<Meta title="Docs|Cypress/Configuración" />
+
+# Configuración
+
+Este proyecto ya cuenta con Cypress instalado, pero falta completar la configuración. Esta se encuentra en el archivo
+`cypress.json` en la raíz del proyecto.
+
+```json
+{
+  "baseUrl": "http://localhost:3000",
+  "viewportWidth": 1908,
+  "viewportHeight": 955,
+  "projectId": "",
+  "env": {
+    "HOST": ""
+  }
+}
+```
+
+En dicho archivo se debe sustituir añadir la URL de la api que queremos utilizar.
+
+## Dashboard
+
+Para usar el dashboard de cypress primero hay que crear una cuenta en cypress.io si no se dispone ya. Despues ejecuta:
+`npm run cypress:open`
+
+Aparecerá una ventana, desde ella, una vez logueado, se puede configurar desde la pestaña `Runs`.
+
+<img src={runs} alt='runs'/>
+
+En el siguiente paso permite dar un nombre al proyecto y generará un proyectId que guardará en `cypress.json`.
+<img width='50%' src={setup} alt='setup' style={{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}/>
+
+A continuación indicará el comando para ejecutar cypress y almacenar los datos de los test en el <a
+href="https://dashboard.cypress.io">dashboard de Cypress</a>. Copia este comando en `cypress:record` del
+`package.json`.
+
+## Gitlab
+
+```yaml
+test:
+  image: cypress/base:12.1.0
+  stage: test
+  before_script:
+  - npm i
+  script:
+    - npm run start:ci
+  artifacts:
+    paths:
+       - coverage/
+```

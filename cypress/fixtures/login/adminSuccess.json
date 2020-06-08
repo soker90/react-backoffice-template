@@ -1,0 +1,13 @@
+{
+  "user": {
+    "id": "5e86809283e28b96d2d38537",
+    "username": "admin",
+    "password": "admin",
+    "firstName": "Usuario",
+    "lastName": "Administrador",
+    "role": "admin"
+  },
+  "permissions": [
+    "SEARCH_CLIENTS"
+  ]
+}
