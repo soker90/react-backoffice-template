@@ -9,5 +9,4 @@
   Cypress para la realización de los tests necesarios.
 
 ## Documentación
-Se puede acceder a la documentación con el siguiente comando:
-`npm run storybook`
+La documentación está disponible en [https://soker90.github.io/react-backoffice-template](https://soker90.github.io/react-backoffice-template)
