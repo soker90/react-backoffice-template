@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.js": "./main.ece7e3fe639c85a5da39.bundle.js",
+    "main.js.map": "./main.ece7e3fe639c85a5da39.bundle.js.map",
+    "runtime~main.js": "./runtime~main.ece7e3fe639c85a5da39.bundle.js",
+    "runtime~main.js.map": "./runtime~main.ece7e3fe639c85a5da39.bundle.js.map",
+    "vendors~main.js": "./vendors~main.ece7e3fe639c85a5da39.bundle.js",
+    "vendors~main.js.map": "./vendors~main.ece7e3fe639c85a5da39.bundle.js.map",
+    "iframe.html": "./iframe.html",
+    "precache-manifest.07fc92ff26fca169b58fb9f23d33bd58.js": "./precache-manifest.07fc92ff26fca169b58fb9f23d33bd58.js",
+    "service-worker.js": "./service-worker.js",
+    "static/media/cypress-large.png": "./static/media/cypress-large.9a53301e.png",
+    "static/media/cypress-runs.png": "./static/media/cypress-runs.f7eec0f5.png",
+    "static/media/cypress-setup.png": "./static/media/cypress-setup.688da81e.png",
+    "static/media/logo-large.png": "./static/media/logo-large.0f2d9703.png",
+    "vendors~main.ece7e3fe639c85a5da39.bundle.js.LICENSE.txt": "./vendors~main.ece7e3fe639c85a5da39.bundle.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime~main.ece7e3fe639c85a5da39.bundle.js",
+    "vendors~main.ece7e3fe639c85a5da39.bundle.js",
+    "main.ece7e3fe639c85a5da39.bundle.js"
+  ]
+}
