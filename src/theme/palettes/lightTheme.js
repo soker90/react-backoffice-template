@@ -25,12 +25,10 @@ export default {
       paper: colors.common.white,
     },
     primary: {
-      dark: colors.pink[700],
-      main: colors.pink[300],
-      light: colors.pink[100],
+      main: colors.indigo[600],
     },
     secondary: {
-      main: '#d81b60',
+      main: '#5850EC',
     },
     text: {
       primary: colors.blueGrey[900],

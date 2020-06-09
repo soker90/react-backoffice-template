@@ -26,7 +26,8 @@
     "lint": "./node_modules/.bin/eslint ./src/***/*.js",
     "lint:fix": "./node_modules/.bin/eslint ./src/***/*.js --fix",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "browserslist": {
     "production": [
@@ -80,6 +81,7 @@
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^5.3.19",
+    "@storybook/storybook-deployer": "^2.8.6",
     "cypress": "^4.7.0",
     "cypress-intellij-reporter": "0.0.4",
     "env-cmd": "^10.1.0",
