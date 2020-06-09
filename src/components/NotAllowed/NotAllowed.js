@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import {
   Typography,
-  Button, useTheme, useMediaQuery, Container, Box,
+  useTheme, useMediaQuery, Container, Box,
 } from '@material-ui/core';
 
 import { useStyles } from './NotAllowed.styles';
